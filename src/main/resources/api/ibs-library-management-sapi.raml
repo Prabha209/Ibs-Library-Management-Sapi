@@ -1,0 +1,99 @@
+#%RAML 1.0
+title: Ibs-Library-Management-Sapi
+version: 1.0
+baseUri: www.klarttechnologies.com
+mediaType: 
+- application/json
+protocols:
+  - HTTP
+
+traits: 
+  hreaderdetail: !include Traits/trait-headers.raml
+  queryparamsgetbook: !include Traits/queryParamsGetBooks-trait.raml
+
+types:
+  404-error: !include datatypes/dataType-404.raml
+  getlibraryresponse: !include datatypes/getlibraryresponsedataType.raml
+  libraryapi: !include datatypes/libraryapi.raml
+  request: !include /datatypes/request.raml
+  response: !include /datatypes/response.raml
+
+/libraries:
+  get:
+    is:
+      - hreaderdetail
+    responses:
+      200:
+        body:
+          application/json:
+            type: getlibraryresponse        
+      404:
+        body:
+          application/json:
+            type: 404-error
+
+  /{libraryID}:
+    get:
+      is:
+        - hreaderdetail
+      responses:
+        200:
+          body:
+            application/json:
+              type: libraryapi
+              
+        404:
+          body:
+            application/json:
+              type: 404-error
+
+/books:
+  post:
+    description: This resource is to add new book to the database
+    is:
+      - hreaderdetail
+    body:
+      application/json:
+        description: This is a request body sectionof this create book resource
+        type: request
+    responses:
+      201:
+        description: The book is added/created
+        body:
+          application/json:
+            type: response
+            
+      404:
+        body:
+          application/json:
+            type: 404-error
+  get:
+    description: To get the book details based on the query parameter rating and library code
+    is:
+      - hreaderdetail
+      - queryparamsgetbook
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/example to get the book info.raml        
+      404:
+        body:
+          application/json:
+            type: 404-error
+            
+
+            
+
+
+      
+        
+        
+
+                  
+        
+
+
+
+      
+

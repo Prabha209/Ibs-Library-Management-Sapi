@@ -1,0 +1,13 @@
+#%RAML 1.0 Trait
+queryParameters:
+      rating:
+        required: true
+        enum: ["1","2","3","4","5"]
+        example:
+          "4"
+      libraryCode:
+        required: true
+        maxLength: 10
+        minLength: 6
+        example:
+          "IBS1234"
